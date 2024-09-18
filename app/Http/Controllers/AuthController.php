@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,6 +19,39 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
+
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
+
+    public function showChangePasswordForm()
+    {
+        return view('auth.change-password');
+    }
+
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'username' => 'required|string|unique:users,username',
+            'password' => 'required|string|min:4',
+            'confirm_password' => 'required|string|same:password|min:4',
+        ]);
+
+        $user = User::create([
+            'username' => $data['username'],
+            'password' => $data['password'],
+        ]);
+
+        event(new Registered($user));
+
+        $this->limiter()->hit($this->throttleKey($request));
+
+        $this->guard()->login($user);
+
+        return to_route('news.index');
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -44,14 +79,32 @@ class AuthController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    public function changePassword(Request $request)
+    {
+        $data = $request->validate([
+            'old_password' => 'required|string|min:4',
+            'new_password' => 'required|string|min:4',
+        ]);
+
+        $user = auth()->user();
+
+        if (Hash::check($data['old_password'], $user->password)){
+            $user->password = $data['new_password'];
+            $user->save();
+        }
+
+        return to_route('news.index');
+    }
+
     protected function attemptLogin(Request $request)
     {
         $credentials = $request->only('username', 'password');
 
-        $loggedIn    = $this->guard()->once($credentials);
+        $loggedIn = $this->guard()->once($credentials);
 
         return $loggedIn && $this->guard()->attempt($credentials, $request->boolean('remember'));
     }
+
     protected function sendLockoutResponse(Request $request)
     {
         $seconds = $this->limiter()->availableIn(
@@ -72,7 +125,7 @@ class AuthController extends Controller
 
         $this->limiter()->clear($this->throttleKey($request));
 
-        return redirect()->intended();
+        return to_route('news.index');
     }
 
     protected function sendFailedLoginResponse(Request $request)
