@@ -16,7 +16,7 @@ Route::prefix('panel')->name('panel.')->group(function () {
     Route::middleware('auth:panel')->group(function () {
         Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
-        Route::resource('admins', AdminController::class)->except('show');
+        Route::resource('admins', AdminController::class)->except('show')->middleware('can:administrate');
         Route::resource('users', UserController::class)->except('show');
         Route::resource('news', NewsController::class)->except('show');
     });

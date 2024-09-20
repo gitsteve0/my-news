@@ -68,6 +68,8 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
+        unlink(public_path('storage/uploads/'.$news->image));
+
         $news->delete();
 
         return to_route('panel.news.index');

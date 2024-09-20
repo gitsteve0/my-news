@@ -34,12 +34,14 @@
                 </span>
 					<h4 class="text-section">Components</h4>
 				</li>
-				<li class="nav-item {{ request()->routeIs('panel.admins.index') ? 'active' : '' }}">
-					<a href="{{ route('panel.admins.index') }}">
-						<i class="fas fa-user-cog"></i>
-						<p>Admins</p>
-					</a>
-				</li>
+				@can('administrate')
+					<li class="nav-item {{ request()->routeIs('panel.admins.index') ? 'active' : '' }}">
+						<a href="{{ route('panel.admins.index') }}">
+							<i class="fas fa-user-cog"></i>
+							<p>Admins</p>
+						</a>
+					</li>
+				@endcan
 				<li class="nav-item {{ request()->routeIs('panel.news.index') ? 'active' : '' }}">
 					<a href="{{ route('panel.news.index') }}">
 						<i class="fas fa-newspaper"></i>
