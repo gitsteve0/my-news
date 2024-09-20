@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My news</title>
-    <link rel="stylesheet" href="{{ asset('static/css/bootstrap.5.2.1.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/assets/css/bootstrap.min.css') }}">
 </head>
 <body>
 @include('shared.header')
@@ -15,6 +15,6 @@
 </div>
 @include('shared.footer')
 
-<script src="{{ asset('static/js/bootstrap.5.2.1.min.js') }}"></script>
+<script src="{{ asset('static/assets/js/bootstrap.min.js') }}"></script>
 </body>
 </html>

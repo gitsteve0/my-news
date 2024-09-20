@@ -11,11 +11,11 @@
             <input class="w-100" type="text" name="username" placeholder=" Batyr Muhammetnyyazow" id="username">
             <div class="my-4">
                 <label for="password">Password</label>
-                <input class="w-100" type="text" name="password" placeholder=" ****" id="password">
+                <input class="w-100" type="password" name="password" placeholder=" ****" id="password">
             </div>
             <div class="mb-4">
                 <label for="confirm_password">Confirm password</label>
-                <input class="w-100" type="text" name="confirm_password" placeholder=" ****" id="confirm_password">
+                <input class="w-100" type="password" name="confirm_password" placeholder=" ****" id="confirm_password">
             </div>
             <button class="btn btn-primary" type="submit">Login</button>
         </form>

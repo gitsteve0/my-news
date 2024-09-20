@@ -16,3 +16,19 @@ indent_size = 2
 
 [docker-compose.yml]
 indent_size = 4
+
+[*.{blade.php, js, vue, css}]
+indent_size = 2
+indent_style = tab
+
+[*.scss]
+indent_size = 2
+indent_style = tab
+
+[{*.ctp,*.hphp,*.inc,*.module,*.php,*.php4,*.php5,*.phtml}]
+ij_php_space_after_type_cast = true
+ij_php_align_multiline_chained_methods = true
+ij_php_method_call_chain_wrap = on_every_item
+ij_php_align_key_value_pairs = true
+ij_php_import_sorting = by_length
+ij_php_align_assignments = true

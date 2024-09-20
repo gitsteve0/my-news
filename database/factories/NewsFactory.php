@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,13 @@ class NewsFactory extends Factory
      */
     public function definition(): array
     {
+        $admin = Admin::inRandomOrder()->first();
+
         return [
-            'name' => fake()->sentence(2),
+            'admin_id'    => $admin->id,
+            'name'        => fake()->sentence(2),
             'description' => fake()->text(),
-            'image' => fake()->imageUrl(),
-            'author' => fake()->name(),
+            'image'       => 'upload_image.jpg',
         ];
     }
 }
