@@ -13,7 +13,7 @@
 					</a>
 				</div>
 				<div class="card-body overflow-x-scroll">
-					<table class="table table-striped mt-3">
+					<table class="table table-striped mt-3" id="admins-table">
 						<thead>
 						<tr>
 							<th scope="col">#</th>
@@ -23,35 +23,33 @@
 							<th></th>
 						</tr>
 						</thead>
-						<tbody>
-						@foreach($admins as $admin)
-							<tr>
-								<td>{{ $admin->id }}</td>
-								<td>{{ $admin->name }}</td>
-								<td>{{ $admin->username }}</td>
-								<td>{{ $admin->type }}</td>
-								<td class="text-end">
-									<a href="{{ route('panel.admins.edit', $admin) }}" class="btn btn-icon btn-primary">
-										<i class="fas fa-edit"></i>
-									</a>
-										@if($admin->id != auth()->user()->id)
-										<form action="{{ route('panel.admins.destroy', $admin) }}" method="post"
-													onsubmit="return confirm('Are you sure?');"
-													class="d-inline-block ms-2">
-											@csrf
-											@method('DELETE')
-											<button type="submit" class="btn btn-danger btn-icon">
-												<i class="fas fa-trash-alt"></i>
-											</button>
-										</form>
-										@endif
-								</td>
-							</tr>
-						@endforeach
-						</tbody>
+						<tbody></tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
 @endsection
+
+
+@push('js')
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$('#admins-table').DataTable({
+					searching: false,
+					ordering: false,
+					serverSide: true,
+					processing: true,
+					ajax: {
+						url: "{{ route('panel.admins.index') }}",
+						data: function (d) {
+							delete d['columns'];
+							return d;
+						}
+					},
+				});
+			});
+		});
+	</script>
+@endpush

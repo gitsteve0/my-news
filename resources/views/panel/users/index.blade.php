@@ -13,7 +13,7 @@
 					</a>
 				</div>
 				<div class="card-body overflow-x-scroll">
-					<table class="table table-striped mt-3">
+					<table class="table table-striped mt-3" id="users-table">
 						<thead>
 						<tr>
 							<th scope="col">#</th>
@@ -21,31 +21,33 @@
 							<th></th>
 						</tr>
 						</thead>
-						<tbody>
-						@foreach($users as $user)
-							<tr>
-								<td>{{ $user->id }}</td>
-								<td>{{ $user->username }}</td>
-								<td class="text-end">
-									<a href="{{ route('panel.users.edit', $user) }}" class="btn btn-icon btn-primary">
-										<i class="fas fa-edit"></i>
-									</a>
-									<form action="{{ route('panel.users.destroy', $user) }}" method="post"
-												onsubmit="return confirm('Are you sure?');"
-												class="d-inline-block ms-2">
-										@csrf
-										@method('DELETE')
-										<button type="submit" class="btn btn-danger btn-icon">
-											<i class="fas fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
-							</tr>
-						@endforeach
-						</tbody>
+						<tbody></tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
 @endsection
+
+
+@push('js')
+	<script>
+		$(document).ready(function () {
+			$(function () {
+				$('#users-table').DataTable({
+					searching: false,
+					ordering: false,
+					serverSide: true,
+					processing: true,
+					ajax: {
+						url: "{{ route('panel.users.index') }}",
+						data: function (d) {
+							delete d['columns'];
+							return d;
+						}
+					},
+				});
+			});
+		});
+	</script>
+@endpush

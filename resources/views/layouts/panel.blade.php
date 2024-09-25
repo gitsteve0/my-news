@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="{{ asset('static/assets/css/fonts.css') }}">
 	<link rel="stylesheet" href="{{ asset('static/assets/css/kaiadmin.css') }}">
 	<link rel="stylesheet" href="{{ asset('static/assets/css/plugins.css') }}">
+	<link rel="stylesheet" href="{{ asset('static/assets/js/plugin/datatables-bs5/dataTables.bootstrap5.min.css') }}">
 
 	@stack('css')
 </head>
@@ -31,6 +32,8 @@
 	<script src="{{ asset('static/assets/js/core/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('static/assets/js/core/jquery-3.7.1.min.js') }}"></script>
 	<script src="{{ asset('static/assets/js/plugin/select2/select2.full.min.js') }}"></script>
+	<script src="{{ asset('static/assets/js/plugin/datatables/datatables.min.js') }}"></script>
+	<script src="{{ asset('static/assets/js/plugin/datatables-bs5/dataTables.bootstrap5.min.js') }}"></script>
 	@stack('js')
 </body>
 

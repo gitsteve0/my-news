@@ -2,19 +2,40 @@
 
 namespace App\Http\Controllers\Panel;
 
+use App\Models\News;
 use App\Models\Admin;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DatatableRequest;
 use App\Http\Requests\Panel\AdminRequest;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $admins = Admin::latest()->get();
+        if ($request->ajax()) {
+            return $this->datatable(new DatatableRequest($request));
+        }
 
-        return view('panel.admins.index', compact('admins'));
+        return view('panel.admins.index');
     }
 
+    public function datatable(DatatableRequest $request)
+    {
+        $admins = Admin::latest()
+                    ->paginate($request->per_page, ['*'], 'page', $request->page);
+
+        $total = $admins->total();
+        $admins  = $admins->map(fn($admin) => [
+            $admin->id,
+            $admin->name,
+            $admin->username,
+            $admin->type,
+            view('panel.admins.datatable.actions', compact('admin'))->render(),
+        ]);
+
+        return $request->jsonResponse($total, $admins);
+    }
     public function create()
     {
         return view('panel.admins.create');

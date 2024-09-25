@@ -15,6 +15,7 @@
 </div>
 @include('shared.footer')
 
-<script src="{{ asset('static/assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('static/assets/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ asset('static/assets/js/core/jquery-3.7.1.min.js') }}"></script>
 </body>
 </html>
